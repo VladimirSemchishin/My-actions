@@ -1,13 +1,13 @@
-name: learn-github-actions                                 # 
-run-name: ${{ github.actor }} is learning GitHub Actions   # 
-on: [push]                                                 # 
-jobs:                                                      # 
-  check-bats-version:                                      # 
-    runs-on: ubuntu-latest                                 # 
-    steps:                                                 # 
-      - uses: actions/checkout@v4                          # 
+name: learn-github-actions                                 # необязательно: имя, будет отображаться во вкладке Actions, если что вместо него будет исп. имя файла
+run-name: ${{ github.actor }} is learning GitHub Actions   # необязательно: имя запусков workflows
+on: [push]                                                 # Указывает триггер для этого workflow, push - будет запускаться, если кто то отправляет что то в репо.
+jobs:                                                      # Группирует все задания, выполняемые в learn-github-actions workflow
+  check-bats-version:                                      # Определите job с именем check-bats-version: все внутренние ключи будут определять свойства этого job 
+    runs-on: ubuntu-latest                                 # Настраивает job для запуска на ВМ от github с данным образом
+    steps:                                                 # Группирует все шаги выполняемые в джобе check-bats-version: каждые вложенные в него элемент - это действие или сценарий оболочки
+      - uses: actions/checkout@v4                          # Ключевое слово uses указывает на расположение и версию многократно используемого файла рабочего процесса, который будет запущен как задание (не из текущего репозитория, а из подготовленного для этой методички)
       - uses: actions/setup-node@v3                        # 
-        with:                                              # 
-          node-version: '14'                               # 
-      - run: npm install -g bats                           # 
-      - run: bats -v                                       # 
+        with:                                              # описание значений уже заданных переменных
+          node-version: '14'                               # в файле на который ссылается uses будет заменено значение переменной на 14
+      - run: npm install -g bats                           # Ключевое слово run указывает выполнить команду в раннере: при помощи менеджера npm установить пакет тестирования ПО bats
+      - run: bats -v                                       # запуск bats - выведет версию
